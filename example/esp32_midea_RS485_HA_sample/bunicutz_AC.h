@@ -1,13 +1,10 @@
 #include "esphome.h"
 #include <esp32_midea_RS485.h>
 
-#define DI_PIN 16
-#define RO_PIN 17 
-#define DE_PIN 4
-#define RE_PIN 4
+#define DI_PIN 43
+#define RO_PIN 44 
 
 #define SERIAL_COM_BUS &Serial2
-#define SERIAL_COM_CONTROL_PIN DE_PIN
 #define SERIAL_COM_MASTER_ID 0
 #define SERIAL_COM_SLAVE_ID 0
 #define SERIAL_COM_MASTER_SEND_TIME 40
@@ -88,7 +85,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
 
   void setup() override {
     
-  ESP32_Midea_RS485.begin(SERIAL_COM_BUS,RO_PIN,DI_PIN,SERIAL_COM_CONTROL_PIN,SERIAL_COM_MASTER_ID,SERIAL_COM_SLAVE_ID,SERIAL_COM_MASTER_SEND_TIME,SERIAL_COM_SLAVE_TIMEOUT_TIME);
+  ESP32_Midea_RS485.begin(SERIAL_COM_BUS,RO_PIN,DI_PIN,SERIAL_COM_MASTER_ID,SERIAL_COM_SLAVE_ID,SERIAL_COM_MASTER_SEND_TIME,SERIAL_COM_SLAVE_TIMEOUT_TIME);
   
   
   
