@@ -4,7 +4,7 @@
 #define DI_PIN 44
 #define RO_PIN 43 
 
-#define SERIAL_COM_BUS &Serial2
+#define SERIAL_COM_BUS &Serial
 #define SERIAL_COM_MASTER_ID 0
 #define SERIAL_COM_SLAVE_ID 0x1
 #define SERIAL_COM_MASTER_SEND_TIME 40
