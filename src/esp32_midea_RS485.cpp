@@ -6,17 +6,13 @@
 
 #define MIDEA_BAUDRATE 4800
 
-#define DEFAULT_SERIAL_COM_DI_PIN 16
-#define DEFAULT_SERIAL_COM_RO_PIN 17 
+#define DEFAULT_SERIAL_COM_DI_PIN 43
+#define DEFAULT_SERIAL_COM_RO_PIN 44 
 #define DEFAULT_SERIAL_COM_BUS &Serial2
-#define DEFAULT_SERIAL_COM_CONTROL_PIN 4
 #define DEFAULT_SERIAL_COM_MASTER_ID 0
 #define DEFAULT_SERIAL_COM_SLAVE_ID 0
 #define DEFAULT_SERIAL_COM_MASTER_SEND_TIME 40
 #define DEFAULT_SERIAL_COM_SLAVE_TIMEOUT_TIME 100
-
-#define RS485_TX_PIN_VALUE HIGH
-#define RS485_RX_PIN_VALUE LOW
 
 
     //Master command structure
@@ -86,8 +82,7 @@
     #define TRANSMIT_CRC 16
     #define RECEIVE_CRC  32
 
-ESP32_Midea_RS485Class::ESP32_Midea_RS485Class(HardwareSerial *hwSerial, uint8_t ro_pin, uint8_t di_pin, uint8_t re_de_pin, uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout):
-ComControlPin(re_de_pin),
+ESP32_Midea_RS485Class::ESP32_Midea_RS485Class(HardwareSerial *hwSerial, uint8_t ro_pin, uint8_t di_pin, uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout):
 SerialBus(hwSerial),
 datain_pin(di_pin),
 dataout_pin(ro_pin),
@@ -99,14 +94,11 @@ UpdateNextCycle(0)
 {
 }
 
-void ESP32_Midea_RS485Class::begin(HardwareSerial *hwSerial, uint8_t ro_pin, uint8_t di_pin, uint8_t re_de_pin, uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout)
+void ESP32_Midea_RS485Class::begin(HardwareSerial *hwSerial, uint8_t ro_pin, uint8_t di_pin, uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout)
 {
-  ComControlPin = re_de_pin;
   SerialBus = hwSerial;
   datain_pin=di_pin;
   dataout_pin=ro_pin;
-  pinMode(ComControlPin, OUTPUT);
-  digitalWrite(ComControlPin, RS485_RX_PIN_VALUE);
   SerialBus->begin(MIDEA_BAUDRATE, SERIAL_8N1, datain_pin, dataout_pin);
   SlaveId = slave_id;
   MasterId = master_id;
@@ -265,10 +257,8 @@ void ESP32_Midea_RS485Class::Update()
       UpdateNextCycle=0;
     }  
     
-    digitalWrite(ComControlPin, RS485_TX_PIN_VALUE);
     SerialBus->write(SentData,16);
     delay(Master_Send_Time);
-    digitalWrite(ComControlPin, RS485_RX_PIN_VALUE);
     delay(Slave_Resp_Time);
     
     State.ACNotResponding = 0;
@@ -321,10 +311,8 @@ void ESP32_Midea_RS485Class::Lock()
       SentData[15] =  PROLOGUE;
       SentData[14] = CalculateCRC(TRANSMIT_CRC);
     
-    digitalWrite(ComControlPin, RS485_TX_PIN_VALUE);
     SerialBus->write(SentData,16);
     delay(Master_Send_Time);
-    digitalWrite(ComControlPin, RS485_RX_PIN_VALUE);
     delay(Slave_Resp_Time);
     
     State.ACNotResponding = 0;
@@ -376,10 +364,8 @@ void ESP32_Midea_RS485Class::Unlock()
       SentData[15] =  PROLOGUE;
       SentData[14] = CalculateCRC(TRANSMIT_CRC);
     
-    digitalWrite(ComControlPin, RS485_TX_PIN_VALUE);
     SerialBus->write(SentData,16);
     delay(Master_Send_Time);
-    digitalWrite(ComControlPin, RS485_RX_PIN_VALUE);
     delay(Slave_Resp_Time);
     
     State.ACNotResponding = 0;
