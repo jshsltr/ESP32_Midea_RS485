@@ -1,8 +1,8 @@
 #include "esphome.h"
 #include <esp32_midea_RS485.h>
 
-#define DI_PIN 43
-#define RO_PIN 44 
+#define DI_PIN 44
+#define RO_PIN 43 
 
 #define SERIAL_COM_BUS &Serial2
 #define SERIAL_COM_MASTER_ID 0
