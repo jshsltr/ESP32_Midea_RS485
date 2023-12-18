@@ -17,7 +17,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
   // constructor
   
 
-  Sensor *ACT1Temp = new Sensor();
+  Sensor *T1Temp = new Sensor();
   Sensor *ACT2ATemp = new Sensor();
   Sensor *ACT2BTemp = new Sensor();
   Sensor *ACT3Temp = new Sensor();
@@ -312,7 +312,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
     update_internal = 0;
   }
 
-  ACT1Temp->publish_state(ESP32_Midea_RS485.State.T1Temp);
+  T1Temp->publish_state(ESP32_Midea_RS485.State.T1Temp);
   ACT2ATemp->publish_state(ESP32_Midea_RS485.State.T2ATemp);
   ACT2BTemp->publish_state(ESP32_Midea_RS485.State.T2BTemp);
   ACT3Temp->publish_state(ESP32_Midea_RS485.State.T3Temp);
