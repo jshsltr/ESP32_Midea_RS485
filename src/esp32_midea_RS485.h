@@ -4,9 +4,9 @@
 
 #ifndef _esp32_midea_rs485_h
     #define _esp32_midea_rs485_h
-    
+
     #include "Arduino.h"
-    
+
     typedef enum{
       MIDEA_AC_OPMODE_OFF=0,
       MIDEA_AC_OPMODE_AUTO,
@@ -24,7 +24,7 @@
       MIDEA_AC_FANMODE_LOW,
       MIDEA_AC_FANMODE_UNKNOWN
     }MideaACFanModeType;
-    
+
     typedef enum{
       MIDEA_AC_ACTIVE=0,
       MIDEA_AC_INACTIVE=1,
@@ -36,10 +36,10 @@
       MideaACOpModeType OpMode;
       MideaACFanModeType FanMode;
       uint8_t SetTemp;
-      int T1Temp;
-      int T2ATemp;
-      int T2BTemp;
-      int T3Temp;
+      float T1Temp;
+      float T2ATemp;
+      float T2BTemp;
+      float T3Temp;
       uint8_t Current;
       uint8_t Unknown2;
       uint32_t TimerStart;
@@ -51,8 +51,8 @@
       uint16_t ProtectFlags;
       uint8_t CCMComErrorFlags;
       uint8_t Unknown4;
-      uint8_t Unknown5;    
-      uint8_t ACNotResponding;    
+      uint8_t Unknown5;
+      uint8_t ACNotResponding;
     }MideaACPropertiesType;
 
     typedef struct{
@@ -70,7 +70,7 @@
 class ESP32_Midea_RS485Class {
   public:
     ESP32_Midea_RS485Class(HardwareSerial *hwSerial, uint8_t ro_pin, uint8_t di_pin, uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout);
-    
+
     virtual void begin(HardwareSerial *hwSerial, uint8_t ro_pin, uint8_t di_pin, uint8_t master_id, uint8_t slave_id, uint8_t command_time, uint8_t response_timeout);
     uint8_t SetMode(MideaACOpModeType mode);
     uint8_t SetFanMode(MideaACFanModeType fan_mode);
@@ -101,8 +101,8 @@ class ESP32_Midea_RS485Class {
     uint8_t ParseResponse();
     uint8_t CalculateSetTime(uint32_t time);
     uint32_t CalculateGetTime(uint8_t time);
-}; 
+};
 
-extern ESP32_Midea_RS485Class ESP32_Midea_RS485;  
+extern ESP32_Midea_RS485Class ESP32_Midea_RS485;
 
 #endif
