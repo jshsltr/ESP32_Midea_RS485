@@ -29,6 +29,10 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
   bool vent = 0;
   bool swing = 0;
   bool lock = 0;
+  float T1Temp = ESP32_Midea_RS485.State.T1Temp;
+  float T2ATemp = ESP32_Midea_RS485.State.T2ATemp;
+  float T2BTemp = ESP32_Midea_RS485.State.T2BTemp;
+  float T3Temp = ESP32_Midea_RS485.State.T3Temp;
 
   esphome::template_::TemplateSelect *_SetMode;
   esphome::template_::TemplateSelect *_SetFanMode;
@@ -311,11 +315,11 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
    
     update_internal = 0;
   }
-
-  ACT1Temp->publish_state(ESP32_Midea_RS485.T1Temp);
-  ACT2ATemp->publish_state(ESP32_Midea_RS485.T2ATemp);
-  ACT2BTemp->publish_state(ESP32_Midea_RS485.T2BTemp);
-  ACT3Temp->publish_state(ESP32_Midea_RS485.T3Temp);
+  
+  ACT1Temp->publish_state(T1Temp);
+  ACT2ATemp->publish_state(T2ATemp);
+  ACT2BTemp->publish_state(T2BTemp);
+  ACT3Temp->publish_state(T3Temp);
   ACNotResponding->publish_state(ESP32_Midea_RS485.State.ACNotResponding);
 
   }
