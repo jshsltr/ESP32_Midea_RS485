@@ -35,7 +35,7 @@
       uint8_t Capabilities;
       MideaACOpModeType OpMode;
       MideaACFanModeType FanMode;
-      int SetTemp;
+      uint8_t SetTemp;
       int T1Temp;
       int T2ATemp;
       int T2BTemp;
