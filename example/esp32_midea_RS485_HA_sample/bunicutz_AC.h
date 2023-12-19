@@ -314,7 +314,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
   }
 
   update_internal = 1;
-  ACT1Temp->publish_state(ESP32_Midea_RS485.State.T1Temp);
+  ACT1Temp->publish_state(ESP32_Midea_RS485.State.ACT1Temp);
   ACT2ATemp->publish_state(ESP32_Midea_RS485.State.T2ATemp);
   ACT2BTemp->publish_state(ESP32_Midea_RS485.State.T2BTemp);
   ACT3Temp->publish_state(ESP32_Midea_RS485.State.T3Temp);
