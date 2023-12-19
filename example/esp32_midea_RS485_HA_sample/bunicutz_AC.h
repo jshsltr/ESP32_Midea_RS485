@@ -15,6 +15,7 @@ float DesiredTemp=18;
 class BunicutzACSensor : public PollingComponent, public Sensor {
  public:
   // constructor
+  BunicutzACSensor() : PollingComponent(10000) {}
 
 
   Sensor *ACT1Temp = new Sensor();
