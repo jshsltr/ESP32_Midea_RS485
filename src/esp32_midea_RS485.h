@@ -36,7 +36,7 @@
       MideaACOpModeType OpMode;
       MideaACFanModeType FanMode;
       uint8_t SetTemp;
-      int ACT1Temp;
+      int T1Temp;
       int T2ATemp;
       int T2BTemp;
       int T3Temp;
