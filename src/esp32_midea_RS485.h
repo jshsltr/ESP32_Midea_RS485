@@ -36,10 +36,10 @@
       MideaACOpModeType OpMode;
       MideaACFanModeType FanMode;
       uint8_t SetTemp;
-      float T1Temp;
-      float T2ATemp;
-      float T2BTemp;
-      float T3Temp;
+      uint8_t T1Temp;
+      uint8_t T2ATemp;
+      uint8_t T2BTemp;
+      uint8_t T3Temp;
       uint8_t Current;
       uint8_t Unknown2;
       uint32_t TimerStart;
