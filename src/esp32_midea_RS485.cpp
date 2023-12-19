@@ -462,7 +462,7 @@ uint8_t ESP32_Midea_RS485Class::ParseResponse()
             State.FanMode = MIDEA_AC_FANMODE_AUTO;
         }
         State.SetTemp = ReceivedData[0x0A];
-        State.T1Temp = (ReceivedData[11]-0x30)/2;
+        State.T1Temp = ReceivedData[0x0A];
         State.T2ATemp = (ReceivedData[0x0C]-0x30)/2;
         State.T2BTemp = (ReceivedData[0x0D]-0x30)/2;
         State.T3Temp = (ReceivedData[0x0E]-0x30)/2;
