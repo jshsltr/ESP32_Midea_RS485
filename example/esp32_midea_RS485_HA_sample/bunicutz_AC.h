@@ -308,11 +308,11 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
     _echo_sleep->publish_state((ESP32_Midea_RS485.State.OperatingFlags&0x01)>0);
     _vent->publish_state((ESP32_Midea_RS485.State.OperatingFlags&0x88)>0);
     _swing->publish_state((ESP32_Midea_RS485.State.OperatingFlags&0x04)>0);
-
+   ACT1Temp->publish_state(ESP32_Midea_RS485.State.T1Temp);
     update_internal = 0;
   }
 
-  ACT1Temp->publish_state(ESP32_Midea_RS485.State.T1Temp);
+  
   ACT2ATemp->publish_state(ESP32_Midea_RS485.State.T2ATemp);
   ACT2BTemp->publish_state(ESP32_Midea_RS485.State.T2BTemp);
   ACT3Temp->publish_state(ESP32_Midea_RS485.State.T3Temp);
