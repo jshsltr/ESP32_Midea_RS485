@@ -7,7 +7,7 @@
 #define MIDEA_BAUDRATE 4800
 
 #define DEFAULT_SERIAL_COM_DI_PIN 44
-#define DEFAULT_SERIAL_COM_RO_PIN 43 
+#define DEFAULT_SERIAL_COM_RO_PIN 43
 #define DEFAULT_SERIAL_COM_BUS &Serial2
 #define DEFAULT_SERIAL_COM_MASTER_ID 0
 #define DEFAULT_SERIAL_COM_SLAVE_ID 0
@@ -18,34 +18,34 @@
     //Master command structure
     #define PREAMBLE      0XAA
     #define PROLOGUE      0X55
-    
+
     #define MASTER_COMMAND_QERRY  0xC0
     #define MASTER_COMMAND_SET    0xC3
     #define MASTER_COMMAND_LOCK   0xCC
     #define MASTER_COMMAND_UNLOCK 0xCD
-    
+
     #define FROM_MASTER           0x80
-    
+
     #define OP_MODE_OFF          0x00
     #define OP_MODE_AUTO         0x80
     #define OP_MODE_FAN          0x81
     #define OP_MODE_DRY          0x82
     #define OP_MODE_HEAT         0x84
     #define OP_MODE_COOL         0x88
-    
+
     #define FAN_MODE_AUTO        0x80
     #define FAN_MODE_HIGH        0x01
     #define FAN_MODE_MEDIUM      0x02
     #define FAN_MODE_LOW         0x04
-    
+
     #define TEMP_SET_FAN_MODE    0xFF
-    
+
     #define MODE_FLAG_AUX_HEAT   0x02
     #define MODE_FLAG_NORM       0x00
     #define MODE_FLAG_ECO        0x01
     #define MODE_FLAG_SWING      0x04
     #define MODE_FLAG_VENT       0x88
-    
+
     #define TIMER_15MIN          0x01
     #define TIMER_30MIN          0x02
     #define TIMER_1HOUR          0x04
@@ -54,30 +54,30 @@
     #define TIMER_8HOUR          0x20
     #define TIMER_16HOUR         0x40
     #define TIMER_INVALID        0x80
-    
-    #define COMMAND_UNKNOWN      0x00  
-    
+
+    #define COMMAND_UNKNOWN      0x00
+
     //Slave Response
 
     #define SLAVE_COMMAND_QERRY  0xC0
     #define SLAVE_COMMAND_SET    0xC3
     #define SLAVE_COMMAND_LOCK   0xCC
     #define SLAVE_COMMAND_UNLOCK 0xCD
-    
+
     #define TO_MASTER            0x80
-    
-    #define RESPONSE_UNKNOWN     0x30  
-    
-    #define CAPABILITIES_EXT_TEMP 0x80  
+
+    #define RESPONSE_UNKNOWN     0x30
+
+    #define CAPABILITIES_EXT_TEMP 0x80
     #define CAPABILITIES_SWING    0x10
-    
-    #define RESPONSE_UNKNOWN1    0xFF  
-    #define RESPONSE_UNKNOWN2    0x01  
-    
-    #define OP_FLAG_WATER_PUMP   0x04  
-    #define OP_FLAG_WATER_LOCK   0x80  
-    
-    #define RESPONSE_UNKNOWN3    0x00  
+
+    #define RESPONSE_UNKNOWN1    0xFF
+    #define RESPONSE_UNKNOWN2    0x01
+
+    #define OP_FLAG_WATER_PUMP   0x04
+    #define OP_FLAG_WATER_LOCK   0x80
+
+    #define RESPONSE_UNKNOWN3    0x00
 
     #define TRANSMIT_CRC 16
     #define RECEIVE_CRC  32
@@ -143,55 +143,55 @@ void ESP32_Midea_RS485Class::begin(HardwareSerial *hwSerial, uint8_t ro_pin, uin
 
 uint8_t ESP32_Midea_RS485Class::SetMode(MideaACOpModeType mode)
 {
-   DesiredState.OpMode = mode; 
+   DesiredState.OpMode = mode;
    UpdateNextCycle = 1;
-   return 1;     
+   return 1;
 }
 
 uint8_t ESP32_Midea_RS485Class::SetFanMode(MideaACFanModeType mode)
 {
-   DesiredState.FanMode = mode; 
-   UpdateNextCycle = 1;     
-   return 1;     
+   DesiredState.FanMode = mode;
+   UpdateNextCycle = 1;
+   return 1;
 }
 
 uint8_t ESP32_Midea_RS485Class::SetTemp(uint8_t temp)
 {
-   DesiredState.SetTemp = temp; 
-   UpdateNextCycle = 1;     
-   return 1;     
+   DesiredState.SetTemp = temp;
+   UpdateNextCycle = 1;
+   return 1;
 }
 
 uint8_t ESP32_Midea_RS485Class::SetAuxHeat_Turbo(MideaACOpFeatureStateType value)
 {
-   DesiredState.AuxHeat_Turbo = value; 
-   UpdateNextCycle = 1;     
-   return 1;     
+   DesiredState.AuxHeat_Turbo = value;
+   UpdateNextCycle = 1;
+   return 1;
 }
 uint8_t ESP32_Midea_RS485Class::SetEcho_Sleep(MideaACOpFeatureStateType value)
 {
-   DesiredState.Echo_Sleep = value; 
-   UpdateNextCycle = 1;     
-   return 1;     
+   DesiredState.Echo_Sleep = value;
+   UpdateNextCycle = 1;
+   return 1;
 }
 uint8_t ESP32_Midea_RS485Class::SetSwing(MideaACOpFeatureStateType value)
 {
-   DesiredState.Swing = value; 
-   UpdateNextCycle = 1;     
-   return 1;     
+   DesiredState.Swing = value;
+   UpdateNextCycle = 1;
+   return 1;
 }
 uint8_t ESP32_Midea_RS485Class::SetVent(MideaACOpFeatureStateType value)
 {
-   DesiredState.Vent = value; 
-   UpdateNextCycle = 1;     
-   return 1;     
+   DesiredState.Vent = value;
+   UpdateNextCycle = 1;
+   return 1;
 }
 
 
 void ESP32_Midea_RS485Class::Update()
 {
     uint8_t i,resp;
-    
+
     if(0==UpdateNextCycle)
     {
       //construct querry command
@@ -229,7 +229,7 @@ void ESP32_Midea_RS485Class::Update()
         case MIDEA_AC_OPMODE_DRY: SentData[6] =  OP_MODE_DRY; break;
         case MIDEA_AC_OPMODE_HEAT: SentData[6] =  OP_MODE_HEAT; break;
         case MIDEA_AC_OPMODE_COOL: SentData[6] =  OP_MODE_COOL; break;
-        default: SentData[6] =  OP_MODE_OFF;     
+        default: SentData[6] =  OP_MODE_OFF;
       }
       //set fan mode
       switch(DesiredState.FanMode)
@@ -238,14 +238,14 @@ void ESP32_Midea_RS485Class::Update()
         case MIDEA_AC_FANMODE_HIGH: SentData[7] =  FAN_MODE_HIGH; break;
         case MIDEA_AC_FANMODE_MEDIUM: SentData[7] =  FAN_MODE_MEDIUM; break;
         case MIDEA_AC_FANMODE_LOW: SentData[7] =  FAN_MODE_LOW; break;
-        default: SentData[7] =  FAN_MODE_AUTO;     
+        default: SentData[7] =  FAN_MODE_AUTO;
       }
-      //set temp 
+      //set temp
       SentData[8] =  DesiredState.SetTemp;
       //set mode flags
       SentData[9] =   (DesiredState.AuxHeat_Turbo<<1)|(DesiredState.Echo_Sleep<<0)|(DesiredState.Swing<<2)|(DesiredState.Vent*0x88);
       //set timer start
-      SentData[10] =  CalculateSetTime(State.TimerStart);      
+      SentData[10] =  CalculateSetTime(State.TimerStart);
       //set timer stop
       SentData[11] =  CalculateSetTime(State.TimerStop);
       //unknown -> 0
@@ -253,16 +253,16 @@ void ESP32_Midea_RS485Class::Update()
       SentData[13] =  0xFF-SentData[1];
       SentData[15] =  PROLOGUE;
       SentData[14] = CalculateCRC(TRANSMIT_CRC);
-      
+
       UpdateNextCycle=0;
-    }  
-    
+    }
+
     SerialBus->write(SentData,16);
     delay(Master_Send_Time);
     delay(Slave_Resp_Time);
-    
+
     State.ACNotResponding = 0;
-    
+
     resp = SerialBus->available();
 
     if(resp==32)
@@ -286,13 +286,13 @@ void ESP32_Midea_RS485Class::Update()
                 ReceivedData[i]=0;
             }
             State.ACNotResponding = 2;
-        } 
+        }
 }
 
 void ESP32_Midea_RS485Class::Lock()
 {
     uint8_t i,resp;
-    
+
       //construct lock command
       SentData[0] =  PREAMBLE;
       SentData[1] =  MASTER_COMMAND_LOCK;
@@ -310,13 +310,13 @@ void ESP32_Midea_RS485Class::Lock()
       SentData[13] =  0xFF-SentData[1];
       SentData[15] =  PROLOGUE;
       SentData[14] = CalculateCRC(TRANSMIT_CRC);
-    
+
     SerialBus->write(SentData,16);
     delay(Master_Send_Time);
     delay(Slave_Resp_Time);
-    
+
     State.ACNotResponding = 0;
-    
+
     resp = SerialBus->available();
 
     if(resp==32)
@@ -340,12 +340,12 @@ void ESP32_Midea_RS485Class::Lock()
                 ReceivedData[i]=0;
             }
             State.ACNotResponding = 2;
-        } 
+        }
 }
 void ESP32_Midea_RS485Class::Unlock()
 {
     uint8_t i,resp;
-    
+
       //construct unlock command
       SentData[0] =  PREAMBLE;
       SentData[1] =  MASTER_COMMAND_UNLOCK;
@@ -363,13 +363,13 @@ void ESP32_Midea_RS485Class::Unlock()
       SentData[13] =  0xFF-SentData[1];
       SentData[15] =  PROLOGUE;
       SentData[14] = CalculateCRC(TRANSMIT_CRC);
-    
+
     SerialBus->write(SentData,16);
     delay(Master_Send_Time);
     delay(Slave_Resp_Time);
-    
+
     State.ACNotResponding = 0;
-    
+
     resp = SerialBus->available();
 
     if(resp==32)
@@ -393,8 +393,8 @@ void ESP32_Midea_RS485Class::Unlock()
                 ReceivedData[i]=0;
             }
             State.ACNotResponding = 2;
-        } 
-    
+        }
+
 }
 
 uint8_t ESP32_Midea_RS485Class::CalculateCRC(uint8_t len)
@@ -403,7 +403,7 @@ uint8_t ESP32_Midea_RS485Class::CalculateCRC(uint8_t len)
     uint32_t crc=0;
     uint8_t retVal=0;
     for(i=0;i<len;i++)
-    { 
+    {
         if(16==len)
         {
             if(i!=14)
@@ -413,7 +413,7 @@ uint8_t ESP32_Midea_RS485Class::CalculateCRC(uint8_t len)
         }else if (30!=i)
             {
                 crc+=ReceivedData[i];
-            } 
+            }
     }
     return 0xFF - (crc&0xFF);
 }
@@ -423,7 +423,7 @@ void ESP32_Midea_RS485Class::ClearResponseBuffer()
     uint8_t i=0;
     for(i=0;i<32;i++)
     {
-      ReceivedData[i]=0;   
+      ReceivedData[i]=0;
     }
 }
 
@@ -439,7 +439,7 @@ uint8_t ESP32_Midea_RS485Class::ParseResponse()
     {
         State.Unknown1 = ReceivedData[6];
         State.Capabilities = ReceivedData[7];
-        switch(ReceivedData[8]) 
+        switch(ReceivedData[8])
         {
             case OP_MODE_OFF: State.OpMode = MIDEA_AC_OPMODE_OFF; break;
             case OP_MODE_AUTO: State.OpMode = MIDEA_AC_OPMODE_AUTO; break;
@@ -448,9 +448,9 @@ uint8_t ESP32_Midea_RS485Class::ParseResponse()
             case OP_MODE_HEAT: State.OpMode = MIDEA_AC_OPMODE_HEAT; break;
             case OP_MODE_COOL: State.OpMode = MIDEA_AC_OPMODE_COOL; break;
             default: State.OpMode = MIDEA_AC_OPMODE_UNKOWN;
-        }        
+        }
 
-        switch(ReceivedData[9]) 
+        switch(ReceivedData[9])
         {
             case FAN_MODE_HIGH: State.FanMode = MIDEA_AC_FANMODE_HIGH; break;
             case FAN_MODE_MEDIUM: State.FanMode = MIDEA_AC_FANMODE_MEDIUM; break;
@@ -462,23 +462,23 @@ uint8_t ESP32_Midea_RS485Class::ParseResponse()
             State.FanMode = MIDEA_AC_FANMODE_AUTO;
         }
         State.SetTemp = ReceivedData[0x0A];
-        State.T1Temp = 0x10;//(ReceivedData[0x0B]-0x30)/2;        
-        State.T2ATemp = 0x10;//(ReceivedData[0x0C]-0x30)/2;        
-        State.T2BTemp = 0x10;//(ReceivedData[0x0D]-0x30)/2;        
-        State.T3Temp = 0x10;//(ReceivedData[0x0E]-0x30)/2;
+        State.T1Temp = (ReceivedData[0x0B]-0x30)/2;
+        State.T2ATemp = (ReceivedData[0x0C]-0x30)/2;
+        State.T2BTemp = (ReceivedData[0x0D]-0x30)/2;
+        State.T3Temp = (ReceivedData[0x0E]-0x30)/2;
         State.Current = ReceivedData[0x0F];
-        State.Unknown2 = ReceivedData[0x10];         
-        State.TimerStart = CalculateGetTime(ReceivedData[0x11]);         
-        State.TimerStop = CalculateGetTime(ReceivedData[0x12]);         
-        State.Unknown3 = ReceivedData[0x13];         
-        State.ModeFlags = ReceivedData[0x14];         
-        State.OperatingFlags = ReceivedData[0x15];         
+        State.Unknown2 = ReceivedData[0x10];
+        State.TimerStart = CalculateGetTime(ReceivedData[0x11]);
+        State.TimerStop = CalculateGetTime(ReceivedData[0x12]);
+        State.Unknown3 = ReceivedData[0x13];
+        State.ModeFlags = ReceivedData[0x14];
+        State.OperatingFlags = ReceivedData[0x15];
         State.ErrorFlags = (ReceivedData[0x16]<<0) | (ReceivedData[0x17]<<8);
         State.ProtectFlags = (ReceivedData[0x18]<<0) | (ReceivedData[0x19]<<8);
         State.CCMComErrorFlags = ReceivedData[0x1A];
         State.Unknown4 = ReceivedData[0x1B];
         State.Unknown5 = ReceivedData[0x1C];
-     return 0;    
+     return 0;
     }else
     {
         return 1;
@@ -487,9 +487,9 @@ uint8_t ESP32_Midea_RS485Class::ParseResponse()
 
 uint8_t ESP32_Midea_RS485Class::CalculateSetTime(uint32_t time)
 {
-   uint32_t current_time = time; 
+   uint32_t current_time = time;
    uint8_t timeValue=0;
-   
+
    if(0<(current_time/960))
    {
       timeValue |=0x40;
@@ -525,12 +525,12 @@ uint8_t ESP32_Midea_RS485Class::CalculateSetTime(uint32_t time)
       timeValue |=0x01;
       current_time = current_time % 15;
    }
-   return timeValue; 
+   return timeValue;
 }
 uint32_t ESP32_Midea_RS485Class::CalculateGetTime(uint8_t time)
 {
    uint32_t timeValue=0;
-   
+
    if(0x40 == (time&0x40))
    {
       timeValue += 960;
@@ -559,7 +559,7 @@ uint32_t ESP32_Midea_RS485Class::CalculateGetTime(uint8_t time)
    {
       timeValue += 15;
    }
-   return timeValue; 
+   return timeValue;
 }
 
 
