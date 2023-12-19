@@ -2,7 +2,7 @@
 #include <esp32_midea_RS485.h>
 
 #define DI_PIN 44
-#define RO_PIN 43 
+#define RO_PIN 43
 
 #define SERIAL_COM_BUS &Serial2
 #define SERIAL_COM_MASTER_ID 0
@@ -15,9 +15,9 @@ float DesiredTemp=18;
 class BunicutzACSensor : public PollingComponent, public Sensor {
  public:
   // constructor
-  
 
-  Sensor *T1Temp = new Sensor();
+
+  Sensor *ACT1Temp = new Sensor();
   Sensor *ACT2ATemp = new Sensor();
   Sensor *ACT2BTemp = new Sensor();
   Sensor *ACT3Temp = new Sensor();
@@ -84,11 +84,11 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
   float get_setup_priority() const override { return esphome::setup_priority::AFTER_WIFI; }
 
   void setup() override {
-    
+
   ESP32_Midea_RS485.begin(SERIAL_COM_BUS,RO_PIN,DI_PIN,SERIAL_COM_MASTER_ID,SERIAL_COM_SLAVE_ID,SERIAL_COM_MASTER_SEND_TIME,SERIAL_COM_SLAVE_TIMEOUT_TIME);
-  
-  
-  
+
+
+
   }
   void update() override {
 
@@ -98,7 +98,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
   if(1==update_command)
   {
     SetMode = _SetMode->state.c_str();
-  
+
     if(SetMode == "Auto")
     {
         ESP32_Midea_RS485.SetMode(MIDEA_AC_OPMODE_AUTO);
@@ -123,7 +123,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
     {
         ESP32_Midea_RS485.SetMode(MIDEA_AC_OPMODE_FAN);
     }
-    
+
     SetFanMode = _SetFanMode->state.c_str();
 
     if(SetFanMode=="Auto")
@@ -142,7 +142,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
     {
         ESP32_Midea_RS485.SetFanMode(MIDEA_AC_FANMODE_LOW);
     }
-    
+
     SetTemp = (_SetTemp->state)/1;
     ESP32_Midea_RS485.SetTemp(SetTemp);
 
@@ -154,7 +154,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
         {
             ESP32_Midea_RS485.SetAuxHeat_Turbo(MIDEA_AC_INACTIVE);
         }
-    
+
     echo_sleep = _echo_sleep->state;
     if(!echo_sleep)
     {
@@ -183,7 +183,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
         }
 
     update_command = 2;
-  } 
+  }
 
   ESP32_Midea_RS485.Update();
 
@@ -245,16 +245,16 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
   ESP32_Midea_RS485.ReceivedData[37],\
   ESP32_Midea_RS485.ReceivedData[38],\
   ESP32_Midea_RS485.ReceivedData[39]);
-  
+
   for(index=0;index<40;index++)
   {
     ESP32_Midea_RS485.ReceivedData[index]=0;
   }
-  
+
   if(ESP32_Midea_RS485.State.ACNotResponding == 0)
   {
     update_internal = 1;
-    
+
     if(ESP32_Midea_RS485.State.OpMode == MIDEA_AC_OPMODE_AUTO)
     {
        _SetMode->publish_state("Auto");
@@ -294,7 +294,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
     {
         _SetFanMode->publish_state("Unknown");
     }
-    
+
     if(ESP32_Midea_RS485.State.SetTemp>0)
     {
         temp = ESP32_Midea_RS485.State.SetTemp * 1.0;
@@ -303,7 +303,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
         {
             _SetTemp->publish_state(18);
         }
-    
+
     _aux_heat->publish_state((ESP32_Midea_RS485.State.OperatingFlags&0x02)>0);
     _echo_sleep->publish_state((ESP32_Midea_RS485.State.OperatingFlags&0x01)>0);
     _vent->publish_state((ESP32_Midea_RS485.State.OperatingFlags&0x88)>0);
@@ -312,7 +312,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
     update_internal = 0;
   }
 
-  T1Temp->publish_state(ESP32_Midea_RS485.State.T1Temp);
+  ACT1Temp->publish_state(ESP32_Midea_RS485.State.T1Temp);
   ACT2ATemp->publish_state(ESP32_Midea_RS485.State.T2ATemp);
   ACT2BTemp->publish_state(ESP32_Midea_RS485.State.T2BTemp);
   ACT3Temp->publish_state(ESP32_Midea_RS485.State.T3Temp);
