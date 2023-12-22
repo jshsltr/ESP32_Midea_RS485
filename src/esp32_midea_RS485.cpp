@@ -433,7 +433,6 @@ uint8_t ESP32_Midea_RS485Class::ParseResponse()
     if(
     (PREAMBLE==ReceivedData[0])&&\
     (PROLOGUE==ReceivedData[0x1F])&&\
-//    (TO_MASTER==ReceivedData[0x2])&&\
     (ReceivedData[0x1E]==CalculateCRC(RECEIVE_CRC))\
     )
     {
