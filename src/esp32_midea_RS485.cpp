@@ -461,17 +461,17 @@ uint8_t ESP32_Midea_RS485Class::ParseResponse()
             State.FanMode = MIDEA_AC_FANMODE_AUTO;
         }
         State.SetTemp = ReceivedData[0x0A];
-        State.T1Temp = (ReceivedData[0x0B]-0x30)/2.0;
-        State.T2ATemp = (ReceivedData[0x0C]-0x30)/2.0;
-        State.T2BTemp = (ReceivedData[0x0D]-0x30)/2.0;
-        State.T3Temp = (ReceivedData[0x0E]-0x30)/2.0;
+        State.T1Temp = (ReceivedData[0x0B]-0x30)/2;        
+        State.T2ATemp = (ReceivedData[0x0C]-0x30)/2;        
+        State.T2BTemp = (ReceivedData[0x0D]-0x30)/2;        
+        State.T3Temp = (ReceivedData[0x0E]-0x30)/2;
         State.Current = ReceivedData[0x0F];
-        State.Unknown2 = ReceivedData[0x10];
-        State.TimerStart = CalculateGetTime(ReceivedData[0x11]);
-        State.TimerStop = CalculateGetTime(ReceivedData[0x12]);
-        State.Unknown3 = ReceivedData[0x13];
-        State.ModeFlags = ReceivedData[0x14];
-        State.OperatingFlags = ReceivedData[0x15];
+        State.Unknown2 = ReceivedData[0x10];         
+        State.TimerStart = CalculateGetTime(ReceivedData[0x11]);         
+        State.TimerStop = CalculateGetTime(ReceivedData[0x12]);         
+        State.Unknown3 = ReceivedData[0x13];         
+        State.ModeFlags = ReceivedData[0x14];         
+        State.OperatingFlags = ReceivedData[0x15];         
         State.ErrorFlags = (ReceivedData[0x16]<<0) | (ReceivedData[0x17]<<8);
         State.ProtectFlags = (ReceivedData[0x18]<<0) | (ReceivedData[0x19]<<8);
         State.CCMComErrorFlags = ReceivedData[0x1A];
