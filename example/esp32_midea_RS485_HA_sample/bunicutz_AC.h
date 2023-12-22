@@ -14,8 +14,8 @@ float DesiredTemp=18;
 
 class BunicutzACSensor : public PollingComponent, public Sensor {
  public:
-  esp32_midea_RS485.h midea;
   // constructor
+
 
   Sensor *ACT1Temp = new Sensor();
   Sensor *ACT2ATemp = new Sensor();
@@ -94,7 +94,6 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
 
   float temp;
   uint8_t index;
-
 
   if(1==update_command)
   {
@@ -248,9 +247,6 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
   ESP32_Midea_RS485.ReceivedData[39]);
 
   for(index=0;index<40;index++)
-  {
-    ESP32_Midea_RS485.ReceivedData[index]=0;
-  }
 
   if(ESP32_Midea_RS485.State.ACNotResponding == 0)
   {
@@ -309,9 +305,18 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
     _echo_sleep->publish_state((ESP32_Midea_RS485.State.OperatingFlags&0x01)>0);
     _vent->publish_state((ESP32_Midea_RS485.State.OperatingFlags&0x88)>0);
     _swing->publish_state((ESP32_Midea_RS485.State.OperatingFlags&0x04)>0);
-   
+
     update_internal = 0;
   }
+
+  ACT1Temp->T1Temp;
+  ACT2ATemp->publish_state(ESP32_Midea_RS485.State.T2ATemp);
+  ACT2BTemp->publish_state(ESP32_Midea_RS485.State.T2BTemp);
+  ACT3Temp->publish_state(ESP32_Midea_RS485.State.T3Temp);
+  ACNotResponding->publish_state(ESP32_Midea_RS485.State.ACNotResponding);
+
+  }
+};
   float T1Temp = midea.State.T1Temp;
   float T2ATemp = midea.State.T2ATemp;
   float T2BTemp = midea.State.T2BTemp;
