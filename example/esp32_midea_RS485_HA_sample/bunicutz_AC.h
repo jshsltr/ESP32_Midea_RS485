@@ -10,7 +10,7 @@
 #define SERIAL_COM_MASTER_SEND_TIME 30
 #define SERIAL_COM_SLAVE_TIMEOUT_TIME 100
 
-float DesiredTemp=18;
+float DesiredTemp=17;
 
 class BunicutzACSensor : public PollingComponent, public Sensor {
  public:
@@ -24,7 +24,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
   Sensor *ACNotResponding = new Sensor();
   std::string SetMode = "Unknown";
   std::string SetFanMode = "Unknown";
-  uint8_t SetTemp = 18;
+  uint8_t SetTemp = 17;
   bool aux_heat = 0;
   bool echo_sleep = 0;
   bool vent = 0;
