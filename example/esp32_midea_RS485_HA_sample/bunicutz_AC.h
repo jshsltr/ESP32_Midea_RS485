@@ -248,6 +248,10 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
 
   for(index=0;index<40;index++)
 
+  {
+    ESP32_Midea_RS485.ReceivedData[index]=0;
+  }
+
   if(ESP32_Midea_RS485.State.ACNotResponding == 0)
   {
     update_internal = 1;
