@@ -24,7 +24,7 @@ class BunicutzACSensor : public PollingComponent, public Sensor {
   Sensor *ACNotResponding = new Sensor();
   std::string SetMode = "Unknown";
   std::string SetFanMode = "Unknown";
-  uint8_t SetTemp = 17;
+  uint8_t SetTemp = 18;
   bool aux_heat = 0;
   bool echo_sleep = 0;
   bool vent = 0;
