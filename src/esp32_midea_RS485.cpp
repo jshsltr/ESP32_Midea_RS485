@@ -1,8 +1,8 @@
 #include "esp32_midea_RS485.h"
 #include "HardwareSerial.h"
 
-#define TEMP_LOW  16
-#define TEMP_HIGH 32
+#define TEMP_LOW  17
+#define TEMP_HIGH 30
 
 #define MIDEA_BAUDRATE 4800
 
