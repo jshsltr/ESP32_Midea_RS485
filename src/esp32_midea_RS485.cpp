@@ -207,7 +207,7 @@ void ESP32_Midea_RS485Class::Update()
       SentData[9] =  0;
       SentData[10] =  0;
       SentData[11] =  0;
-      SentData[12] =  0x01;
+      SentData[12] =  0x02;
       SentData[13] =  0xFF-SentData[1];
       SentData[15] =  PROLOGUE;
       SentData[14] = CalculateCRC(TRANSMIT_CRC);
