@@ -249,7 +249,7 @@ void ESP32_Midea_RS485Class::Update()
       //set timer stop
       SentData[11] =  CalculateSetTime(State.TimerStop);
       //unknown -> 0
-      SentData[12] =  0;
+      SentData[12] =  14;
       SentData[13] =  0xFF-SentData[1];
       SentData[15] =  PROLOGUE;
       SentData[14] = CalculateCRC(TRANSMIT_CRC);
