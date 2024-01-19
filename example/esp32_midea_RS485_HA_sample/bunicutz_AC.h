@@ -10,7 +10,7 @@
 #define SERIAL_COM_MASTER_SEND_TIME 40
 #define SERIAL_COM_SLAVE_TIMEOUT_TIME 100
 
-float DesiredTemp=18;
+float DesiredTemp=15;
 
 class BunicutzACSensor : public PollingComponent, public Sensor {
  public:
